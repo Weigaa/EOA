@@ -48,7 +48,7 @@ wget https://storage.googleapis.com/vit_models/imagenet21k+imagenet2012/{MODEL_N
 ### 2.Train Model
 
 ```python
-python3 -m torch.distributed.launch --nproc_per_node=8 train.py --name cifar10-dist --train_workers 8 --dataset cifar10  --model_type ViT-B_16 --pretrained_dir checkpoint/ViT-B_16.npz --gradient_accumulation_steps 16
+python3 -m torch.distributed.launch --nproc_per_node=8 train.py --name cifar10-dist --train_workers 8 --dataset cifar10  --model_type ViT-B_16 --pretrained_dir checkpoint/ViT-B_16.npz --gradient_accumulation_steps 32
 ```
 
 The default batch size is 512. When GPU memory is insufficient, you can proceed with training by adjusting the value of `--gradient_accumulation_steps`
