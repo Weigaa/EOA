@@ -48,7 +48,7 @@ wget https://storage.googleapis.com/vit_models/imagenet21k+imagenet2012/{MODEL_N
 ### 2.Train Model
 
 ```python
-python3 -m torch.distributed.launch --nproc_per_node=8 train.py --name cifar10-dist --train_workers 8 --dataset cifar10  --model_type ViT-B_16 --pretrained_dir checkpoint/ViT-B_16.npz --gradient_accumulation_steps 32
+python3 -m torch.distributed.launch --nproc_per_node=8 train.py --name cifar10-EOA --train_workers 8 --dataset cifar10  --model_type ViT-B_16 --pretrained_dir checkpoint/ViT-B_16.npz --gradient_accumulation_steps 32
 ```
 CIFAR-10 and CIFAR-100 are automatically download and train. In order to use a different dataset you need to customize [data_utils.py](./utils/data_utils.py).
 
