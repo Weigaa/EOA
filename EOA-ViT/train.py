@@ -411,8 +411,8 @@ def train(args, model):
 
                 # if global_step % t_total == 0:
                 #     break
-                if global_step >= 2:
-                    break
+                # if global_step >= 2:
+                    # break
 
         # 一个epoch之后 把用于累加多个setp loss 的 losses重置
         loss_val = losses.val
