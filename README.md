@@ -17,13 +17,38 @@ The EOA Algorithm implementation on WRN (SAM) model.
 
 The EOA Algorithm implementation on ViT model.
 
+
 # USAGE
 
-use this code achieve EOA-SAM training:
+## use this code achieve EOA-SAM training:
 
 ```
 python EOASAM-cifar100.py #code on Cifar-100
 python EOASAM.py #code on Cifar-10
 ```
+## use this code achieve EOA-ViT training:
 
+### 1. Download Pre-trained model (Google's Official Checkpoint)
 
+* [Available models](https://console.cloud.google.com/storage/vit_models/): ViT-B_16(**85.8M**), R50+ViT-B_16(**97.96M**), ViT-B_32(**87.5M**), ViT-L_16(**303.4M**), ViT-L_32(**305.5M**), ViT-H_14(**630.8M**)
+  * imagenet21k pre-train models
+    * ViT-B_16, ViT-B_32, ViT-L_16, ViT-L_32, ViT-H_14
+  * imagenet21k pre-train + imagenet2012 fine-tuned models
+    * ViT-B_16-224, ViT-B_16, ViT-B_32, ViT-L_16-224, ViT-L_16, ViT-L_32
+  * Hybrid Model([Resnet50](https://github.com/google-research/big_transfer) + Transformer)
+    * R50-ViT-B_16
+```
+# imagenet21k pre-train
+wget https://storage.googleapis.com/vit_models/imagenet21k/{MODEL_NAME}.npz
+
+# imagenet21k pre-train + imagenet2012 fine-tuning
+wget https://storage.googleapis.com/vit_models/imagenet21k+imagenet2012/{MODEL_NAME}.npz
+
+```
+### 2.Train Model
+
+```python
+python3 -m torch.distributed.launch --nproc_per_node=8 train.py --name cifar10-dist --train_workers 8 --dataset cifar10  --model_type ViT-B_16 --pretrained_dir checkpoint/ViT-B_16.npz --gradient_accumulation_steps 16
+```
+
+The default batch size is 512. When GPU memory is insufficient, you can proceed with training by adjusting the value of `--gradient_accumulation_steps`
